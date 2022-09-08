@@ -2,10 +2,10 @@
 import * as trpc from "@trpc/server";
 import * as trpcNext from "@trpc/server/adapters/next";
 import { Session } from "next-auth";
-import { getServerAuthSession } from "../../server/common/get-server-auth-session";
+import { getServerSession } from "@server-utils/session";
 
 type CreateContextOptions = {
-  session: Session | null;
+	session: Session | null;
 };
 
 /** Use this helper for:
@@ -13,9 +13,9 @@ type CreateContextOptions = {
  *  - trpc's `createSSGHelpers` where we don't have req/res
  **/
 export const createContextInner = async (opts: CreateContextOptions) => {
-  return {
-    session: opts.session,
-  };
+	return {
+		session: opts.session,
+	};
 };
 
 /**
@@ -23,16 +23,16 @@ export const createContextInner = async (opts: CreateContextOptions) => {
  * @link https://trpc.io/docs/context
  **/
 export const createContext = async (
-  opts: trpcNext.CreateNextContextOptions,
+	opts: trpcNext.CreateNextContextOptions,
 ) => {
-  const { req, res } = opts;
+	const { req, res } = opts;
 
-  // Get the session from the server using the unstable_getServerSession wrapper function
-  const session = await getServerAuthSession({ req, res });
+	// Get the session from the server using the unstable_getServerSession wrapper function
+	const session = await getServerSession({ req, res });
 
-  return await createContextInner({
-    session,
-  });
+	return await createContextInner({
+		session,
+	});
 };
 
 type Context = trpc.inferAsyncReturnType<typeof createContext>;
@@ -42,17 +42,30 @@ export const createRouter = () => trpc.router<Context>();
 /**
  * Creates a tRPC router that asserts all queries and mutations are from an authorized user. Will throw an unauthorized error if a user is not signed in.
  **/
-export function createProtectedRouter() {
-  return createRouter().middleware(({ ctx, next }) => {
-    if (!ctx.session || !ctx.session.user) {
-      throw new trpc.TRPCError({ code: "UNAUTHORIZED" });
-    }
-    return next({
-      ctx: {
-        ...ctx,
-        // infers that `session` is non-nullable to downstream resolvers
-        session: { ...ctx.session, user: ctx.session.user },
-      },
-    });
-  });
+export function createAuthRouter(authorizeRoleIDs: number[] | null = null) {
+	return createRouter().middleware(({ ctx, next }) => {
+		const session = ctx.session
+
+		if(!session 
+			|| !session?.user
+			|| !(session 
+				&& (
+					(Array.isArray(authorizeRoleIDs) 
+						&& authorizeRoleIDs.length > 0
+						&& session.user?.roles.some((id) => authorizeRoleIDs.includes(id)
+					) 
+					|| authorizeRoleIDs === null
+				)
+			))
+		) {
+			throw new trpc.TRPCError({ code: "UNAUTHORIZED" });
+		}
+		return next({
+			ctx: {
+				...ctx,
+				// infers that `session` is non-nullable to downstream resolvers
+				session: { ...ctx.session, user: ctx.session?.user },
+			},
+		});
+	});
 }
