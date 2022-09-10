@@ -16,14 +16,14 @@ js`npm run migration:run`
 2. auth middleware with roles - done
 3. file system upload and download
 4. set components
-5. soft deleting
-6. eloquents created_at and updated_at change to actual date
+5. soft deleting - done
+6. eloquents created_at and updated_at change to actual date - done
 7. email invite and email templating
 8. Oauth integration - complete
 
 ## triage
 
-1. setting up database (Heroku, Amazon)
+1. setting up database (Heroku, Amazon) - done
 2. setting up UAT, Production environment 
 3. app upload to vercel
 4. learn typeorm migration - partial
