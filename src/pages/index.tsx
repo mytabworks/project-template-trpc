@@ -1,12 +1,12 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import styles from '@styles/Home.module.css'
+import styles from '@client/assets/styles/Home.module.css'
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from 'next/router'
 import { Button, Container, Spinner } from 'react-bootstrap'
 import ClientMiddleware from '@client/middleware'
-import { useAPI } from '@hooks/useAPI'
-import { trpc } from '@hooks/useTRPC'
+import { useAPI } from '@client/common/hooks/useAPI'
+import { trpc } from '@client/common/hooks/useTRPC'
 
 const Home: NextPage = (props) => {
 	const router = useRouter()

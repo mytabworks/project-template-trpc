@@ -1,11 +1,11 @@
-import User from "@model/User"
 import { ConnectionPool } from "eloquents"
 import { NextApiRequest, NextApiResponse } from "next"
-import Validozer from "validozer/esm"
-import BaseController from "./BaseController"
+import Validozer from "validozer"
 import { compare, hash } from 'bcryptjs'
 import { getSession } from "next-auth/react"
-import { NextApiRequestWithSession } from "@server-utils/session"
+import User from "../model/User"
+import { NextApiRequestWithSession } from "../session"
+import BaseController from "./BaseController"
 
 class UserController extends BaseController {
     

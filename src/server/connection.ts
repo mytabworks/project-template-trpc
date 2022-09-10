@@ -1,6 +1,7 @@
 import { setDataSource } from "eloquents"
 import { DataSource } from "typeorm"
 import config from "eloquent.config"
+
 class Connection {
     
     public static connected: boolean = false

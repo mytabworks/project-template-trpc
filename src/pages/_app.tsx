@@ -3,11 +3,11 @@ import { SessionProvider } from "next-auth/react"
 import { withTRPC } from '@trpc/next'
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import { loggerLink } from "@trpc/client/links/loggerLink";
-import { AppRouter } from '@trpc-router/index'
+import type { AppRouter } from '@server/trpc'
 import superjson from 'superjson'
-import Layout from '@components/custom/Layout'
-import '@styles/bootstrap-theme.scss'
-import '@styles/globals.css'
+import Layout from '@client/components/custom/Layout'
+import '@client/assets/styles/bootstrap-theme.scss'
+import '@client/assets/styles/globals.css'
 
 
 function Application({ Component, pageProps: {session, ...pageProps} }: AppProps) {

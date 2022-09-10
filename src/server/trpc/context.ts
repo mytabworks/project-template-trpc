@@ -2,7 +2,7 @@
 import * as trpc from "@trpc/server";
 import * as trpcNext from "@trpc/server/adapters/next";
 import { Session } from "next-auth";
-import { getServerSession } from "@server-utils/session";
+import { getServerSession } from "../session";
 
 type CreateContextOptions = {
 	session: Session | null;
