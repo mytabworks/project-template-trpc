@@ -18,9 +18,9 @@ js`npm run migration:run`
 4. set components
 5. soft deleting - done
 6. eloquents created_at and updated_at change to actual date - done
-7. email invite and email templating
+7. email invite and email templating - partial business email https://www.youtube.com/watch?v=e94AFnJybKg
 8. Oauth integration - complete
-
+https://github.com/clavearnel/philippines-region-province-citymun-brgy/blob/master/mysql/refCitymun.sql
 ## triage
 
 1. setting up database (Heroku, Amazon) - done
