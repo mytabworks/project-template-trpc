@@ -6,6 +6,7 @@ import { loggerLink } from "@trpc/client/links/loggerLink";
 import type { AppRouter } from '@server/trpc'
 import superjson from 'superjson'
 import Layout from '@client/components/custom/Layout'
+import UserInteractionChecker from '@client/components/UserInteractionChecker';
 import '@client/assets/styles/bootstrap-theme.scss'
 import '@client/assets/styles/globals.css'
 import '@client/common/utils/nextPWAUpdate'
@@ -15,9 +16,11 @@ function Application({ Component, pageProps: {session, ...pageProps} }: AppProps
 	
 	return (
 		<SessionProvider session={session}>
-			<Layout>
-				<Component {...pageProps} />
-			</Layout>
+			<UserInteractionChecker>
+				<Layout>
+					<Component {...pageProps} />
+				</Layout>
+			</UserInteractionChecker>
 		</SessionProvider>
 	)
 }
