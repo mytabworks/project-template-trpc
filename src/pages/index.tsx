@@ -7,11 +7,13 @@ import { Button, Container, Spinner } from 'react-bootstrap'
 import ClientMiddleware from '@client/middleware'
 import { useAPI } from '@client/common/hooks/useAPI'
 import { trpc } from '@client/common/hooks/useTRPC'
+import WebPushSubscription from '@client/components/WebPushSubscription'
 
 const Home: NextPage = (props) => {
+	
 	const router = useRouter()
 	const { status, data } = useSession()
-	const request = useAPI(`/api/user/${data?.user.id}`, { method: "GET" })
+	const request = useAPI(`/api/feature/webpush`, { method: "GET" })
 	const handleDeleteThisAccount = (event: any) => {
 		event.preventDefault()
 		request.call().then((response) => {
@@ -39,7 +41,8 @@ const Home: NextPage = (props) => {
 				<div className="d-flex justify-content-center">
 					<div>
 						<div className="d-flex justify-content-center"><img src={data?.user.profile_img} className="mb-5"/></div>
-						<Button onClick={handleDeleteThisAccount}>{request.loading && (<Spinner animation="border" size="sm"/>)} GET this Account</Button>
+						<Button onClick={handleDeleteThisAccount} className="mb-5">{request.loading && (<Spinner animation="border" size="sm"/>)} GET this Account</Button>
+						<WebPushSubscription />
 					</div>
 				</div>
 			</main>
