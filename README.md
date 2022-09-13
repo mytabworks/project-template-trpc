@@ -7,6 +7,9 @@ The package script will only run on npm don't you ever use yarn on migration
 Generate migration that has change on your entities
 js`npm run migration:generate --file=TheMigrationFileName`
 
+Create migration
+js`npm run migration:create --file=TheMigrationFileName`
+
 Run all migration files on /serve/migration folder
 js`npm run migration:run`
 
@@ -15,6 +18,7 @@ js`npm run migration:run`
 1. jwt accessing - done
 2. auth middleware with roles - done
 3. file system upload and download
+https://www.youtube.com/watch?v=eQAIojcArRY
 4. set components
 5. soft deleting - done
 6. eloquents created_at and updated_at change to actual date - done
@@ -29,7 +33,9 @@ https://github.com/clavearnel/philippines-region-province-citymun-brgy/blob/mast
 4. learn typeorm migration - partial
 
 ## future
-1. push notificaiton
-2. chat room
+1. push notificaiton & PWA - setup
+2. chat room & normal live notification
+https://www.youtube.com/watch?v=HggSXt1Hzfk
+https://www.youtube.com/watch?v=7vVqMR96T5o
 3. stripe payment
 4. OTP, google authenticator
