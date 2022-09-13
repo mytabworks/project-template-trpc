@@ -8,6 +8,7 @@ import ClientMiddleware from '@client/middleware'
 import { useAPI } from '@client/common/hooks/useAPI'
 import { trpc } from '@client/common/hooks/useTRPC'
 import WebPushSubscription from '@client/components/WebPushSubscription'
+import { RoleType } from '@server/model/Role'
 
 const Home: NextPage = (props) => {
 	
@@ -50,6 +51,6 @@ const Home: NextPage = (props) => {
 	)
 }
 
-export const getServerSideProps = ClientMiddleware.roles([1, 3]).redirects({ [3]: '/customer' }).auth()
+export const getServerSideProps = ClientMiddleware.roles([RoleType.ADMIN, RoleType.CLIENT]).redirects({ [RoleType.CLIENT]: '/customer' }).auth()
 
 export default Home
