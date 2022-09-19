@@ -36,7 +36,7 @@ const Home: NextPage = (props) => {
 			</Head>
 			<main className="my-5">
 				<h1 className={styles.title}>
-					Welcome to Home {requestExample.data?.name}
+					Welcome to Home
 				</h1>
 				<h4 className="text-center">{data?.user?.name}</h4>
 				<div className="d-flex justify-content-center">

@@ -1,27 +1,34 @@
 import type { AppProps } from 'next/app'
-import { SessionProvider } from "next-auth/react"
+import { SessionProvider } from 'next-auth/react'
 import { withTRPC } from '@trpc/next'
-import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
-import { loggerLink } from "@trpc/client/links/loggerLink";
+import { httpBatchLink } from '@trpc/client/links/httpBatchLink'
+import { loggerLink } from '@trpc/client/links/loggerLink'
 import type { AppRouter } from '@server/trpc'
 import superjson from 'superjson'
 import Layout from '@client/components/custom/Layout'
-import UserInteractionChecker from '@client/components/UserInteractionChecker';
+import UserInteractionChecker from '@client/components/UserInteractionChecker'
+import SocketClient from '@client/components/SocketClient'
+import SSRProvider from 'react-bootstrap/SSRProvider'
+import 'retoast/dist/css/main.css'
 import '@client/assets/styles/bootstrap-theme.scss'
 import '@client/assets/styles/globals.css'
-import '@client/common/utils/nextPWAUpdate'
+import '@client/pwa-update'
 
 
 function Application({ Component, pageProps: {session, ...pageProps} }: AppProps) {
 	
 	return (
-		<SessionProvider session={session}>
-			<UserInteractionChecker>
-				<Layout>
-					<Component {...pageProps} />
-				</Layout>
-			</UserInteractionChecker>
-		</SessionProvider>
+		<SSRProvider>
+			<SessionProvider session={session}>
+				<SocketClient>
+					<UserInteractionChecker>
+						<Layout>
+							<Component {...pageProps} />
+						</Layout>
+					</UserInteractionChecker>
+				</SocketClient>
+			</SessionProvider>
+		</SSRProvider>
 	)
 }
 
