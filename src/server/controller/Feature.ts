@@ -10,7 +10,6 @@ import notifyUsers from "@server/utils/notifyUsers";
 import Chat from "@server/model/Chat";
 import ChatMessage from "@server/model/ChatMessage";
 import { SocketEvent } from "@server/socket";
-import { send } from "process";
 
 class FeaturesController extends BaseController {
 
@@ -299,13 +298,46 @@ class FeaturesController extends BaseController {
                 .where('seen', false)
                 .where('user_id', '!=', session?.user.id)
                 .where('chat_id', params.chat_id) as any)
-                .update({ seen: true})
+                .update({ seen: true })
 
             response.status(200).json({
                 success: true,
                 items: messages,
                 totalCount: messages.totalCount(),
                 next: Math.ceil(messages.totalCount()/size) >= page
+            })
+
+        } catch (error: any) {
+            
+            return response.status(500).json({
+                success: false,
+                message: error.message
+            })
+        } finally {
+
+            await cp.close()
+        }
+    }
+
+    public static async seenmessages(request: NextApiRequestWithSession, response: NextApiResponse<any>) {
+        const cp = new ConnectionPool()
+
+        try {
+
+            await cp.open()
+
+            const session = request.session
+
+            const params = request.query
+
+            await (ChatMessage
+                .where('seen', false)
+                .where('user_id', '!=', session?.user.id)
+                .where('chat_id', params.chat_id) as any)
+                .update({ seen: true })
+
+            response.status(200).json({
+                success: true
             })
 
         } catch (error: any) {
