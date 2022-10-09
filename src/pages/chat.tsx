@@ -4,7 +4,7 @@ import ClientMiddleware from '@client/middleware'
 import { useAPI } from '@client/common/hooks/useAPI'
 import { trpc } from '@client/common/hooks/useTRPC'
 import { RoleType } from '@server/model/Role'
-import Chatbox from '@client/components/Chatbox'
+import Chatbox from '@client/components/custom/Chatbox'
 
 
 const Chat: NextPage = (props) => {
